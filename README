@@ -1,0 +1,14 @@
+Este proyecto ha sido realizado para el curso de introducción a Django.
+
+
+Como instalar el proyecto?
+
+1) Crear un virtualenv
+2) Dentro del virtualenv instalar las dependencias del proyecto.
+    pip install -r requirements.txt
+3) Iniciar la base de datos para el proyecto.
+    python manage.py syncdb --all
+4) Aplicar todas las migraciones
+    python manage.py migrate --fake
+
+#EOF

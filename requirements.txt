@@ -1,6 +1,6 @@
 #Requerimientos del proyecto
-django==1.4
+django<1.5
 gunicorn
 South
-django-debug-toolbar
+django-debug-toolbar==1.0.1
 django-south-admin
