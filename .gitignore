@@ -2,3 +2,5 @@
 config/env/dev.py
 .project
 .pydevproject
+local_settings.py
+tutorial.db
