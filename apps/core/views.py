@@ -10,7 +10,7 @@ from apps.blog.forms import UserRegisterForm
 import logging
 
 
-@login_required
+# @login_required
 def home(request):
     return render(request, "core/home.html")
 

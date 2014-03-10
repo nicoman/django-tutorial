@@ -17,6 +17,9 @@ ADMINS = (
 
 LOGIN_URL = "/users/login/"
 
+# Add next page when you login
+LOGIN_REDIRECT_URL = '/blog/'
+
 MANAGERS = ADMINS
 
 DATABASES = {
