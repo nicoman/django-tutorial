@@ -10,13 +10,13 @@ from django.contrib.auth.views import login
 from apps.blog.models import Post
 from apps.blog.forms import PostForm
 
+
 def home(request):
     posts = Post.objects.all()[:2]
     return render(request, "blog/home.html", {'posts': posts})
 
 
 def posts(request):
-
     posts = Post.objects.all().order_by("-datetime")
     result = {}
     for p in posts:
@@ -24,11 +24,12 @@ def posts(request):
     #posts = Post.objects.filter(title__startswith="C")
     return render(request, "blog/posts.html", {'posts': result})
 
+
 @login_required
 def create_post(request):
 
     form = PostForm(request.POST or None)
-    if form.is_valid(): # All validation rules pass
+    if form.is_valid():  # All validation rules pass
         user = request.user
         post = form.save(commit=False)
         post.author = user
@@ -42,11 +43,16 @@ def edit_post(request, post_id):
     logging.critical(request.method)
     a_post_instance = get_object_or_404(Post, id=post_id)
     form = PostForm(request.POST or None, instance=a_post_instance)
-    if form.is_valid(): # All validation rules pass
+    if form.is_valid():  # All validation rules pass
         post = form.save()
         return redirect(reverse("blog_posts"))
 
     return render(request, "blog/edit_post.html", {'form': form})
+
+
+def post(request, post_id):
+    a_post = get_object_or_404(Post, id=post_id)
+    return render(request, 'blog/post.html', {'post': a_post})
 
 
 # ---------------------------------------------------
@@ -55,17 +61,16 @@ def edit_post(request, post_id):
 
 
 def create_post_first_aproach(request):
-
     if request.method == "POST":
-        form = PostForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+        form = PostForm(request.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
             user = User.objects.all()[0]
             post = form.save(commit=False)
             post.author = user
             post.save()
-            return redirect(reverse("blog_posts")) # Redirect after POST
+            return redirect(reverse("blog_posts"))  # Redirect after POST
     else:
         form = PostForm()
 
