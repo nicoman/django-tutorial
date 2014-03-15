@@ -88,6 +88,16 @@ body{
 	font-weight: bold;
 }
 
+/* TODO
+Duplicate css I am in the bus, no time xD
+*/
+
+.post .title a {
+	font-size: 16px;
+	color: #092E20;
+	font-weight: bold;
+}
+
 .post .date {
 	font-size: 10px;
 	color: #bbb;
