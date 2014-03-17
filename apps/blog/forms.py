@@ -1,4 +1,4 @@
-from apps.blog.models import Post
+from apps.blog.models import Post, Comment
 from django.forms.widgets import Textarea
 from django import forms
 from django.core.exceptions import ValidationError
@@ -58,3 +58,10 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError(
                 self.error_messages['password_mismatch'])
         return password2
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('content', )

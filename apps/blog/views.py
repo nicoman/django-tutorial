@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.views import login
-from apps.blog.models import Post
-from apps.blog.forms import PostForm
+from apps.blog.models import Post, Comment
+from apps.blog.forms import PostForm, CommentForm
 
 
 def home(request):
@@ -52,7 +52,9 @@ def edit_post(request, post_id):
 
 def post(request, post_id):
     a_post = get_object_or_404(Post, id=post_id)
-    return render(request, 'blog/post.html', {'post': a_post})
+    comments = Comment.objects.filter(post=post_id)
+    form = CommentForm()
+    return render(request, 'blog/post.html', {'post': a_post, 'comments': comments, 'form': form})
 
 
 # ---------------------------------------------------
@@ -77,8 +79,17 @@ def create_post_first_aproach(request):
     return render(request, "blog/create_post.html", {'form': form})
 
 
-def comment_post(request):
-    form = None
+@login_required
+def comment_post(request, post_id):
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.author = request.user
+        post = get_object_or_404(Post, id=post_id)
+        comment.post = post
+        comment.save()
+        return redirect(reverse("blog_posts"))
+
     return render(request, "blog/comment_post.html", {'form': form})
 
 

@@ -5,6 +5,7 @@
 <h3>Comment Post</h3>
 
 <form method="post" action=".">
+    {% csrf_token %}
     {{ form }}
 </form>
 

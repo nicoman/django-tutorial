@@ -20,6 +20,22 @@
         <div class="author">posted by: {{ post.author|title }} -</div>
         <div class="date">{{ post.datetime|date:"H:i d M Y" }}</div>
         <div class="content">{{ post.content }}</div>
+        <div>
+        {% for comment in comments %}
+            <div class="comment">
+                <div><b>{{ comment.author }} </b>escribio:</div>
+                <p>{{ comment.content|title }}</p>
+            </div>
+        {% empty %}
+            <div><i>No Commments</i></div>
+        {% endfor %}
+        </div>
+        <form action="{% url blog_comment_post post.id %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Comment" />
+        </form>
+
     </div>
 </div>
 {% endblock%}
